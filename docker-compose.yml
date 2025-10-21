@@ -1,7 +1,22 @@
+version: "3.9"
+
 volumes:
   mysql_data:
 
 services:
+  # ---------------- MySQL Database ----------------
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Nurul123
+      MYSQL_DATABASE: saas_ssl
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - internal
+
   # ---------------- Application ----------------
   app:
     container_name: cf-ssl-for-saas
@@ -30,19 +45,6 @@ services:
       - internal
     ports:
       - "5000:5000"
-
-  # ---------------- MySQL Database ----------------
-  mysql:
-    image: mysql:8.0
-    container_name: mysql
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: pass
-      MYSQL_DATABASE: saas_ssl
-    volumes:
-      - mysql_data:/var/lib/mysql
-    networks:
-      - internal
 
 networks:
   web:
