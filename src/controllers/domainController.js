@@ -16,7 +16,7 @@ export const addDomain = async (req, res) => {
       method: "POST",
       body: JSON.stringify({
         hostname,
-        ssl: { method: "http", type: "dv" },
+        ssl: { method: "txt", type: "dv" },
       }),
     });
 
@@ -25,7 +25,9 @@ export const addDomain = async (req, res) => {
       data: {
         hostname,
         status: cf.result.status,
-        verification: cf.result.verification_records?.[0]?.value || null,
+        txt_name: cf.result.verification_records?.[0]?.txt_name || null,
+        txt_value: cf.result.verification_records?.[0]?.value || null,
+        method: cf.result.ssl?.method || null,
         ssl_status: cf.result.ssl?.status || null,
       },
     });
